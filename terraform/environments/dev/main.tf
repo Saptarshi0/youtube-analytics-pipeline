@@ -90,3 +90,7 @@ resource "aws_lambda_permission" "eventbridge" {
   principal     = "events.amazonaws.com"
   source_arn    = aws_cloudwatch_event_rule.youtube_trigger.arn
 }
+
+
+# fetch my AWS Account ID at runtime
+data "aws_caller_identity" "current" {}
