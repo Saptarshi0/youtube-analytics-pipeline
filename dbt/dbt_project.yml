@@ -1,0 +1,25 @@
+name: youtube_analytics
+version: "1.0.0"
+config-version: 2
+
+profile: youtube_analytics
+
+model-paths: ["models"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  youtube_analytics:
+    staging:
+      +materialized: view
+      +schema: dbt_staging
+
+    gold:
+      +materialized: table
+      +schema: dbt_gold
+      +table_type: iceberg
+      +s3_data_naming: schema_table_unique
+      +partitioned_by: ["region"]

@@ -1,0 +1,16 @@
+# Place this file at ~/.dbt/profiles.yml  (NOT inside the project folder)
+# Never commit this file to git — it contains your AWS config.
+
+youtube_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: athena
+      region_name: us-east-1
+      s3_staging_dir: s3://youtube-glue-assets-dev-900932787422/dbt-results/
+      s3_data_dir: s3://youtube-analytics-gold-dev/dbt/
+      database: awsdatacatalog
+      schema: youtube_analytics_dev
+      work_group: primary
+      threads: 4
+      # aws_profile_name: your-named-profile  # uncomment if not using default credentials

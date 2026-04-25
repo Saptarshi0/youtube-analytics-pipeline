@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: fct_trending_leaderboard
+    description: Top 10 trending videos per (region, snapshot_date).
+    columns:
+      - name: video_id
+        tests: [not_null]
+      - name: region
+        tests: [not_null]
+      - name: snapshot_date
+        tests: [not_null]
+      - name: trending_rank
+        tests: [not_null]
+      - name: engagement_quintile
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
+              quote: false
+              
+  - name: fct_top_channels
+    description: Channels ranked by total trending views per (region, snapshot_date).
+    columns:
+      - name: channel_id
+        tests: [not_null]
+      - name: region
+        tests: [not_null]
+      - name: snapshot_date
+        tests: [not_null]
+      - name: channel_rank
+        tests: [not_null]
+
+  - name: fct_category_performance
+    description: Category-level performance with regional and global comparisons.
+    columns:
+      - name: category_id
+        tests: [not_null]
+      - name: region
+        tests: [not_null]
+      - name: snapshot_date
+        tests: [not_null]
+
+  - name: fct_momentum_videos
+    description: Top 20 fastest-rising videos per (region, snapshot_date).
+    columns:
+      - name: video_id
+        tests: [not_null]
+      - name: region
+        tests: [not_null]
+      - name: snapshot_date
+        tests: [not_null]
+      - name: velocity_rank
+        tests: [not_null]
+      - name: momentum_label
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['accelerating', 'growing', 'flat', 'declining']

@@ -1,0 +1,44 @@
+version: 2
+
+sources:
+  - name: gold_raw
+    description: >
+      Gold Delta Lake tables written by the Glue gold job and registered
+      in the Glue Data Catalog under youtube_analytics_dev.
+    database: awsdatacatalog
+    schema: youtube_analytics_dev
+    tables:
+      - name: gold_daily_trending_rank
+        columns:
+          - name: video_id
+            tests: [not_null]
+          - name: trending_rank
+            tests: [not_null]
+          - name: region
+            tests: [not_null]
+          - name: snapshot_date
+            tests: [not_null]
+      - name: gold_category_stats
+        columns:
+          - name: category_id
+            tests: [not_null]
+          - name: region
+            tests: [not_null]
+          - name: snapshot_date
+            tests: [not_null]
+      - name: gold_channel_stats
+        columns:
+          - name: channel_id
+            tests: [not_null]
+          - name: region
+            tests: [not_null]
+          - name: snapshot_date
+            tests: [not_null]
+      - name: gold_view_velocity
+        columns:
+          - name: video_id
+            tests: [not_null]
+          - name: region
+            tests: [not_null]
+          - name: snapshot_date
+            tests: [not_null]

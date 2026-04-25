@@ -16,3 +16,4 @@ credentials
 
 # DS Store (Mac)
 .DS_Store
+.venv/

@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: stg_daily_trending_rank
+    description: Trending videos with category names added, nulls normalised.
+    columns:
+      - name: video_id
+        tests: [not_null]
+      - name: trending_rank
+        tests: [not_null]
+      - name: region
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['US', 'GB', 'IN', 'CA']
+      - name: snapshot_date
+        tests: [not_null]
+
+  - name: stg_category_stats
+    description: Category-level aggregations per region and snapshot date.
+    columns:
+      - name: category_id
+        tests: [not_null]
+      - name: region
+        tests: [not_null]
+      - name: snapshot_date
+        tests: [not_null]
+
+  - name: stg_channel_stats
+    description: Channel-level aggregations per region and snapshot date.
+    columns:
+      - name: channel_id
+        tests: [not_null]
+      - name: region
+        tests: [not_null]
+      - name: snapshot_date
+        tests: [not_null]
+
+  - name: stg_view_velocity
+    description: Day-over-day view velocity with momentum label.
+    columns:
+      - name: video_id
+        tests: [not_null]
+      - name: region
+        tests: [not_null]
+      - name: snapshot_date
+        tests: [not_null]
+      - name: momentum_label
+        tests:
+          - accepted_values:
+              values: ['accelerating', 'growing', 'flat', 'declining', null]
