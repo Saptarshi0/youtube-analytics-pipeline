@@ -17,3 +17,4 @@ credentials
 # DS Store (Mac)
 .DS_Store
 .venv/
+grafana-provisioning/datasources/athena.yaml
