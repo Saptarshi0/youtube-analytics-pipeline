@@ -18,3 +18,5 @@ credentials
 .DS_Store
 .venv/
 grafana-provisioning/datasources/athena.yaml
+airflow/.env
+airflow/.env
