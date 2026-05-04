@@ -1,0 +1,48 @@
+[2026-05-02T14:57:46.863+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-02T14:57:46.870+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: youtube_analytics_pipeline.run_bronze_validation manual__2026-05-02T14:57:43.979665+00:00 [queued]>
+[2026-05-02T14:57:46.872+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: youtube_analytics_pipeline.run_bronze_validation manual__2026-05-02T14:57:43.979665+00:00 [queued]>
+[2026-05-02T14:57:46.873+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-02T14:57:46.876+0000] {taskinstance.py:2330} INFO - Executing <Task(GlueJobOperator): run_bronze_validation> on 2026-05-02 14:57:43.979665+00:00
+[2026-05-02T14:57:46.878+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'youtube_analytics_pipeline', 'run_bronze_validation', 'manual__2026-05-02T14:57:43.979665+00:00', '--job-id', '29', '--raw', '--subdir', 'DAGS_FOLDER/youtube_analytics_pipeline_dag.py', '--cfg-path', '/tmp/tmp69dqnuci']
+[2026-05-02T14:57:46.879+0000] {standard_task_runner.py:91} INFO - Job 29: Subtask run_bronze_validation
+[2026-05-02T14:57:46.879+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=215) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-02T14:57:46.880+0000] {standard_task_runner.py:64} INFO - Started process 216 to run task
+[2026-05-02T14:57:46.896+0000] {task_command.py:426} INFO - Running <TaskInstance: youtube_analytics_pipeline.run_bronze_validation manual__2026-05-02T14:57:43.979665+00:00 [running]> on host b4e161314b21
+[2026-05-02T14:57:46.920+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='boby' AIRFLOW_CTX_DAG_ID='youtube_analytics_pipeline' AIRFLOW_CTX_TASK_ID='run_bronze_validation' AIRFLOW_CTX_EXECUTION_DATE='2026-05-02T14:57:43.979665+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-02T14:57:43.979665+00:00'
+[2026-05-02T14:57:46.921+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-02T14:57:46.924+0000] {glue.py:186} INFO - Initializing AWS Glue Job: youtube-ge-bronze-validation-dev. Wait for completion: True
+[2026-05-02T14:57:46.924+0000] {glue.py:365} INFO - Checking if job already exists: youtube-ge-bronze-validation-dev
+[2026-05-02T14:57:46.927+0000] {base_aws.py:587} WARNING - Unable to find AWS Connection ID 'aws_default', switching to empty.
+[2026-05-02T14:57:46.927+0000] {base_aws.py:164} INFO - No connection ID provided. Fallback on boto3 credential strategy (region_name='us-east-1'). See: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html
+[2026-05-02T14:57:46.981+0000] {credentials.py:1147} INFO - Found credentials in environment variables.
+[2026-05-02T14:57:48.356+0000] {glue.py:207} INFO - You can monitor this Glue Job run at: https://console.aws.amazon.com/gluestudio/home?region=us-east-1#/job/youtube-ge-bronze-validation-dev/run/jr_8e2f80f1d443203d093f75eceb6e2c3330cefbd7777f691a1d4c29a1720a13c5
+[2026-05-02T14:57:48.681+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:57:55.028+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:58:01.346+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:58:07.683+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:58:14.013+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:58:20.336+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:58:26.677+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:58:33.012+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:58:39.367+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:58:45.714+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:58:52.067+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:58:58.387+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:59:04.718+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:59:11.044+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:59:17.386+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:59:23.719+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:59:30.059+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:59:36.422+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:59:42.756+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:59:49.104+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T14:59:55.452+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T15:00:01.791+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T15:00:08.129+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-ge-bronze-validation-dev current run state with status RUNNING
+[2026-05-02T15:00:14.431+0000] {glue.py:341} INFO - Exiting Job jr_8e2f80f1d443203d093f75eceb6e2c3330cefbd7777f691a1d4c29a1720a13c5 Run State: SUCCEEDED
+[2026-05-02T15:00:14.432+0000] {glue.py:222} INFO - AWS Glue Job: youtube-ge-bronze-validation-dev status: SUCCEEDED. Run Id: jr_8e2f80f1d443203d093f75eceb6e2c3330cefbd7777f691a1d4c29a1720a13c5
+[2026-05-02T15:00:14.433+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-02T15:00:14.457+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=youtube_analytics_pipeline, task_id=run_bronze_validation, run_id=manual__2026-05-02T14:57:43.979665+00:00, execution_date=20260502T145743, start_date=20260502T145746, end_date=20260502T150014
+[2026-05-02T15:00:14.475+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-02T15:00:14.490+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-02T15:00:14.491+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

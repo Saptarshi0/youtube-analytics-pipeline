@@ -5,7 +5,7 @@ with source as (
 enriched as (
     select
         category_id,
-        case category_id
+        case cast(category_id as integer)
             when 1  then 'Film & Animation'
             when 2  then 'Autos & Vehicles'
             when 10 then 'Music'

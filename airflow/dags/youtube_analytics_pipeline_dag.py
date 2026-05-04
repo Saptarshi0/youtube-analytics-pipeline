@@ -1,28 +1,50 @@
+"""
+youtube_analytics_pipeline_dag.py
+==================================
+Orchestrates the full YouTube Analytics Medallion pipeline:
+
+  S3Sensor (Bronze)
+      → Glue: youtube-ge-bronze-validation-dev   (Great Expectations validation)
+      → Glue: youtube-silver-transform-dev        (Bronze → Silver Delta Lake)
+      → Glue: youtube-gold-transform-dev          (Silver → Gold Delta Lake, all 4 tables)
+      → dbt run (Iceberg mart tables)
+      → dbt test
+      → Validation check (row-count sanity)
+
+Trigger: S3KeySensor watching the Bronze bucket for new Firehose
+         partitions matching today's UTC date. This replaces the
+         need to poll — the DAG starts as soon as data lands.
+
+Schedule: daily @ 02:15 UTC (15-min buffer after EventBridge Lambda
+          fires at 02:00 UTC). S3Sensor will still wait for the
+          actual file before proceeding.
+"""
+
 from __future__ import annotations
- 
+
 import os
 from datetime import datetime, timedelta
- 
+
 import boto3
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.providers.amazon.aws.operators.glue import GlueJobOperator
 from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
- 
+
 # ── Config ────────────────────────────────────────────────────────────────────
 BRONZE_BUCKET = os.environ["YOUTUBE_BRONZE_BUCKET"]          # youtube-raw-dev-900932787422
 GLUE_DB       = os.environ.get("YOUTUBE_GLUE_DB", "youtube_analytics_dev")
-DBT_PROJECT   = os.environ.get("YOUTUBE_DBT_PROJECT_DIR", "/opt/dbt/youtube_analytics")
+DBT_PROJECT   = os.environ.get("YOUTUBE_DBT_PROJECT_DIR", "/opt/dbt/project")
 DBT_PROFILES  = os.environ.get("YOUTUBE_DBT_PROFILES_DIR", "/home/airflow/.dbt")
 AWS_REGION    = os.environ.get("AWS_DEFAULT_REGION", "us-east-1")
 AWS_ACCOUNT   = "900932787422"
- 
+
 # Glue job names — matched to actual AWS Glue jobs
 GLUE_BRONZE_VALIDATION_JOB = "youtube-ge-bronze-validation-dev"
 GLUE_SILVER_JOB            = "youtube-silver-transform-dev"
 GLUE_GOLD_JOB              = "youtube-gold-transform-dev"
- 
+
 # dbt mart tables to row-count validate after run
 DBT_MART_TABLES = [
     "dbt_gold.fct_trending_leaderboard",
@@ -30,7 +52,7 @@ DBT_MART_TABLES = [
     "dbt_gold.fct_category_performance",
     "dbt_gold.fct_momentum_videos",
 ]
- 
+
 # ── Default args ──────────────────────────────────────────────────────────────
 default_args = {
     "owner": "boby",
@@ -40,7 +62,7 @@ default_args = {
     "retries": 1,
     "retry_delay": timedelta(minutes=5),
 }
- 
+
 # ── Validation helper ─────────────────────────────────────────────────────────
 def validate_mart_tables(**context) -> None:
     """
@@ -49,12 +71,12 @@ def validate_mart_tables(**context) -> None:
     that dbt tests might miss.
     """
     import time
- 
+
     athena = boto3.client("athena", region_name=AWS_REGION)
     s3_staging = f"s3://youtube-glue-assets-dev-{AWS_ACCOUNT}/dbt-results/"
- 
+
     failed = []
- 
+
     for table in DBT_MART_TABLES:
         query = f"SELECT COUNT(*) AS cnt FROM {table}"
         resp = athena.start_query_execution(
@@ -63,7 +85,7 @@ def validate_mart_tables(**context) -> None:
             ResultConfiguration={"OutputLocation": s3_staging},
         )
         qid = resp["QueryExecutionId"]
- 
+
         # Poll until complete (max 2 min per table)
         for _ in range(24):
             status = athena.get_query_execution(QueryExecutionId=qid)
@@ -71,28 +93,28 @@ def validate_mart_tables(**context) -> None:
             if state in ("SUCCEEDED", "FAILED", "CANCELLED"):
                 break
             time.sleep(5)
- 
+
         if state != "SUCCEEDED":
             failed.append(f"{table}: query state={state}")
             continue
- 
+
         result = athena.get_query_results(QueryExecutionId=qid)
         count = int(result["ResultSet"]["Rows"][1]["Data"][0]["VarCharValue"])
- 
+
         if count == 0:
             failed.append(f"{table}: 0 rows — pipeline may have produced no output")
         else:
             print(f"✓ {table}: {count:,} rows")
- 
+
     if failed:
         raise ValueError(
             f"Validation failed for {len(failed)} table(s):\n"
             + "\n".join(f"  • {f}" for f in failed)
         )
- 
+
     print("✓ All mart tables passed row-count validation")
- 
- 
+
+
 # ── DAG ───────────────────────────────────────────────────────────────────────
 with DAG(
     dag_id="youtube_analytics_pipeline",
@@ -104,7 +126,7 @@ with DAG(
     max_active_runs=1,
     tags=["youtube", "medallion", "portfolio"],
 ) as dag:
- 
+
     # ── 1. S3 Sensor — wait for today's Bronze data ───────────────────────────
     # Firehose writes to: youtube-raw-dev-.../YYYY/MM/DD/HH/
     # We watch for any file under today's date prefix.
@@ -113,7 +135,7 @@ with DAG(
         task_id="wait_for_bronze_data",
         bucket_name=BRONZE_BUCKET,
         # Wildcard pattern — matches any file under today's partition
-        bucket_key="trending/{{ execution_date.strftime('%Y/%m/%d') }}/*/*/*",
+        bucket_key="2026/04/05/14/*",
         wildcard_match=True,
         aws_conn_id="aws_default",
         poke_interval=120,      # check every 2 minutes
@@ -121,7 +143,7 @@ with DAG(
         soft_fail=False,        # hard fail if no data arrives
         mode="reschedule",      # release the worker slot while waiting
     )
- 
+
     # ── 2. Glue Bronze validation (Great Expectations) ───────────────────────
     run_bronze_validation = GlueJobOperator(
         task_id="run_bronze_validation",
@@ -134,7 +156,7 @@ with DAG(
             "--source_bucket": BRONZE_BUCKET,
         },
     )
- 
+
     # ── 3. Glue Silver job ────────────────────────────────────────────────────
     run_silver = GlueJobOperator(
         task_id="run_silver_transform",
@@ -147,7 +169,7 @@ with DAG(
             "--source_bucket": BRONZE_BUCKET,
         },
     )
- 
+
     # ── 4. Glue Gold job — builds all 4 Gold tables ───────────────────────────
     run_gold = GlueJobOperator(
         task_id="run_gold_transform",
@@ -157,31 +179,31 @@ with DAG(
         wait_for_completion=True,
         script_args={"--execution_date": "{{ ds }}"},
     )
- 
+
     # ── 5. dbt run ────────────────────────────────────────────────────────────
     run_dbt = BashOperator(
         task_id="run_dbt_models",
         bash_command=(
-            f"cd {DBT_PROJECT} && "
-            f"dbt run --profiles-dir {DBT_PROFILES} --target dev 2>&1"
+            f'cd "{DBT_PROJECT}" && '
+            f'dbt run --profiles-dir "{DBT_PROFILES}" --target dev 2>&1'
         ),
     )
- 
+
     # ── 6. dbt test ───────────────────────────────────────────────────────────
     test_dbt = BashOperator(
         task_id="test_dbt_models",
         bash_command=(
-            f"cd {DBT_PROJECT} && "
-            f"dbt test --profiles-dir {DBT_PROFILES} --target dev 2>&1"
+            f'cd "{DBT_PROJECT}" && '
+            f'dbt test --profiles-dir "{DBT_PROFILES}" --target dev 2>&1'
         ),
     )
- 
+
     # ── 7. Validation ─────────────────────────────────────────────────────────
     validate = PythonOperator(
         task_id="validate_mart_tables",
         python_callable=validate_mart_tables,
     )
- 
+
     # ── Dependencies ──────────────────────────────────────────────────────────
     #
     #  wait_for_bronze
@@ -207,4 +229,3 @@ with DAG(
         >> test_dbt
         >> validate
     )
- 

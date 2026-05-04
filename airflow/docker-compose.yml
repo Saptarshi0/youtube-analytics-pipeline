@@ -8,7 +8,7 @@
 version: '3.8'
 
 x-airflow-common: &airflow-common
-  image: apache/airflow:2.9.3
+  build: .
   environment: &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY}
@@ -27,16 +27,16 @@ x-airflow-common: &airflow-common
     # Pipeline config — passed through to DAG via env vars
     YOUTUBE_BRONZE_BUCKET: ${YOUTUBE_BRONZE_BUCKET}
     YOUTUBE_GLUE_DB: youtube_analytics_dev
-    YOUTUBE_DBT_PROJECT_DIR: ${YOUTUBE_DBT_PROJECT_DIR}
-    YOUTUBE_DBT_PROFILES_DIR: ${YOUTUBE_DBT_PROFILES_DIR}
+    YOUTUBE_DBT_PROJECT_DIR: /opt/dbt/project
+    YOUTUBE_DBT_PROFILES_DIR: /home/airflow/.dbt
 
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
     # Mount your dbt project so the BashOperator can run dbt commands
-    - ${YOUTUBE_DBT_PROJECT_DIR}:/opt/dbt/youtube_analytics
-    - ${YOUTUBE_DBT_PROFILES_DIR}:/home/airflow/.dbt
+    - ${YOUTUBE_DBT_PROJECT_DIR}:/opt/dbt/project
+    - ~/.dbt:/home/airflow/.dbt
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     postgres:

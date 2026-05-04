@@ -1,0 +1,37 @@
+[2026-05-02T07:04:24.342+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-02T07:04:24.348+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: youtube_analytics_pipeline.run_dbt_models scheduled__2026-05-01T02:15:00+00:00 [queued]>
+[2026-05-02T07:04:24.350+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: youtube_analytics_pipeline.run_dbt_models scheduled__2026-05-01T02:15:00+00:00 [queued]>
+[2026-05-02T07:04:24.350+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-02T07:04:24.354+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): run_dbt_models> on 2026-05-01 02:15:00+00:00
+[2026-05-02T07:04:24.356+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'youtube_analytics_pipeline', 'run_dbt_models', 'scheduled__2026-05-01T02:15:00+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/youtube_analytics_pipeline_dag.py', '--cfg-path', '/tmp/tmp9dctrbl4']
+[2026-05-02T07:04:24.357+0000] {standard_task_runner.py:91} INFO - Job 6: Subtask run_dbt_models
+[2026-05-02T07:04:24.357+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=364) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-02T07:04:24.358+0000] {standard_task_runner.py:64} INFO - Started process 365 to run task
+[2026-05-02T07:04:24.374+0000] {task_command.py:426} INFO - Running <TaskInstance: youtube_analytics_pipeline.run_dbt_models scheduled__2026-05-01T02:15:00+00:00 [running]> on host 23d787bea689
+[2026-05-02T07:04:24.401+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='boby' AIRFLOW_CTX_DAG_ID='youtube_analytics_pipeline' AIRFLOW_CTX_TASK_ID='run_dbt_models' AIRFLOW_CTX_EXECUTION_DATE='2026-05-01T02:15:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-05-01T02:15:00+00:00'
+[2026-05-02T07:04:24.401+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-02T07:04:24.405+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-05-02T07:04:24.405+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /Volumes/Crucial 500GB/youtube_analytics_pipeline/dbt && dbt run --profiles-dir /Users/saptarshi/.dbt --target dev 2>&1']
+[2026-05-02T07:04:24.408+0000] {subprocess.py:86} INFO - Output:
+[2026-05-02T07:04:24.409+0000] {subprocess.py:93} INFO - /usr/bin/bash: line 1: cd: too many arguments
+[2026-05-02T07:04:24.409+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2026-05-02T07:04:24.409+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-02T07:04:24.413+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2026-05-02T07:04:24.414+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=youtube_analytics_pipeline, task_id=run_dbt_models, run_id=scheduled__2026-05-01T02:15:00+00:00, execution_date=20260501T021500, start_date=20260502T070424, end_date=20260502T070424
+[2026-05-02T07:04:24.418+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 6 for task run_dbt_models (Bash command failed. The command returned a non-zero exit code 1.; 365)
+[2026-05-02T07:04:24.455+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-05-02T07:04:24.464+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-02T07:04:24.464+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

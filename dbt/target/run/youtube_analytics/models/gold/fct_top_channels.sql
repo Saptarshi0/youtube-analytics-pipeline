@@ -1,1 +1,1 @@
-SELECT '{"rowcount":200,"data_scanned_in_bytes":15378}';
+SELECT '{"rowcount":0,"data_scanned_in_bytes":0}';

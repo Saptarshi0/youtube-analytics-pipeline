@@ -296,10 +296,10 @@ for table_name, (df, path) in GOLD_TABLES.items():
         "StorageDescriptor": {
             "Columns":     sd_columns,
             "Location":    path,
-            "InputFormat":  "org.apache.hadoop.mapred.SequenceFileInputFormat",
-            "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat",
+            "InputFormat":  "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+            "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
             "SerdeInfo": {
-                "SerializationLibrary": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+                "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
             },
             "Compressed": False,
         },
@@ -309,12 +309,18 @@ for table_name, (df, path) in GOLD_TABLES.items():
             "classification":             "delta",
             "spark.sql.sources.provider": "delta",
             "EXTERNAL":                   "TRUE",
+            "parquet.compression":        "SNAPPY",
             "path":                       path,
+            "table_type":                 "DELTA",
         },
     }
 
     try:
-        glue_client.get_table(DatabaseName=GLUE_DATABASE, Name=table_name)
+        existing = glue_client.get_table(DatabaseName=GLUE_DATABASE, Name=table_name)
+        # Preserve existing columns if they exist — only update parameters and location
+        existing_cols = existing["Table"]["StorageDescriptor"]["Columns"]
+        if existing_cols:
+            table_input["StorageDescriptor"]["Columns"] = existing_cols
         glue_client.update_table(DatabaseName=GLUE_DATABASE, TableInput=table_input)
         print(f"[GOLD] Updated  : {GLUE_DATABASE}.{table_name}")
     except glue_client.exceptions.EntityNotFoundException:

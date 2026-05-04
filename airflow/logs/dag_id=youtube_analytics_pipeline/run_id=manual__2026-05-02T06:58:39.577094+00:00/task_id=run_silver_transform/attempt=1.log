@@ -1,0 +1,38 @@
+[2026-05-02T07:12:20.647+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-02T07:12:20.653+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: youtube_analytics_pipeline.run_silver_transform manual__2026-05-02T06:58:39.577094+00:00 [queued]>
+[2026-05-02T07:12:20.655+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: youtube_analytics_pipeline.run_silver_transform manual__2026-05-02T06:58:39.577094+00:00 [queued]>
+[2026-05-02T07:12:20.656+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-02T07:12:20.659+0000] {taskinstance.py:2330} INFO - Executing <Task(GlueJobOperator): run_silver_transform> on 2026-05-02 06:58:39.577094+00:00
+[2026-05-02T07:12:20.662+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'youtube_analytics_pipeline', 'run_silver_transform', 'manual__2026-05-02T06:58:39.577094+00:00', '--job-id', '10', '--raw', '--subdir', 'DAGS_FOLDER/youtube_analytics_pipeline_dag.py', '--cfg-path', '/tmp/tmp7_sg0x01']
+[2026-05-02T07:12:20.663+0000] {standard_task_runner.py:91} INFO - Job 10: Subtask run_silver_transform
+[2026-05-02T07:12:20.663+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=550) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-02T07:12:20.663+0000] {standard_task_runner.py:64} INFO - Started process 551 to run task
+[2026-05-02T07:12:20.680+0000] {task_command.py:426} INFO - Running <TaskInstance: youtube_analytics_pipeline.run_silver_transform manual__2026-05-02T06:58:39.577094+00:00 [running]> on host 23d787bea689
+[2026-05-02T07:12:20.707+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='boby' AIRFLOW_CTX_DAG_ID='youtube_analytics_pipeline' AIRFLOW_CTX_TASK_ID='run_silver_transform' AIRFLOW_CTX_EXECUTION_DATE='2026-05-02T06:58:39.577094+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-02T06:58:39.577094+00:00'
+[2026-05-02T07:12:20.707+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-02T07:12:20.711+0000] {glue.py:186} INFO - Initializing AWS Glue Job: youtube-silver-transform-dev. Wait for completion: True
+[2026-05-02T07:12:20.711+0000] {glue.py:365} INFO - Checking if job already exists: youtube-silver-transform-dev
+[2026-05-02T07:12:20.715+0000] {base_aws.py:587} WARNING - Unable to find AWS Connection ID 'aws_default', switching to empty.
+[2026-05-02T07:12:20.715+0000] {base_aws.py:164} INFO - No connection ID provided. Fallback on boto3 credential strategy (region_name='us-east-1'). See: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html
+[2026-05-02T07:12:20.773+0000] {credentials.py:1147} INFO - Found credentials in environment variables.
+[2026-05-02T07:12:23.192+0000] {glue.py:207} INFO - You can monitor this Glue Job run at: https://console.aws.amazon.com/gluestudio/home?region=us-east-1#/job/youtube-silver-transform-dev/run/jr_968f772078d4a910d96b42db9826e03eff44a81ab7eef32052211b678a768423
+[2026-05-02T07:12:23.505+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:12:29.856+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:12:36.227+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:12:42.573+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:12:48.983+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:12:55.335+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:13:01.660+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:13:08.131+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:13:14.483+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:13:20.832+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:13:27.202+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:13:33.548+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:13:39.933+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-silver-transform-dev current run state with status RUNNING
+[2026-05-02T07:13:46.236+0000] {glue.py:341} INFO - Exiting Job jr_968f772078d4a910d96b42db9826e03eff44a81ab7eef32052211b678a768423 Run State: SUCCEEDED
+[2026-05-02T07:13:46.237+0000] {glue.py:222} INFO - AWS Glue Job: youtube-silver-transform-dev status: SUCCEEDED. Run Id: jr_968f772078d4a910d96b42db9826e03eff44a81ab7eef32052211b678a768423
+[2026-05-02T07:13:46.237+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-02T07:13:46.264+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=youtube_analytics_pipeline, task_id=run_silver_transform, run_id=manual__2026-05-02T06:58:39.577094+00:00, execution_date=20260502T065839, start_date=20260502T071220, end_date=20260502T071346
+[2026-05-02T07:13:46.280+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-02T07:13:46.295+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-02T07:13:46.296+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

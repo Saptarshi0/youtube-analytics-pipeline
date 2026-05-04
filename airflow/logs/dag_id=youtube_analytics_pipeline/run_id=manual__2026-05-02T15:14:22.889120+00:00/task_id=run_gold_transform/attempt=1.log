@@ -1,0 +1,41 @@
+[2026-05-02T15:18:30.062+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-02T15:18:30.067+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: youtube_analytics_pipeline.run_gold_transform manual__2026-05-02T15:14:22.889120+00:00 [queued]>
+[2026-05-02T15:18:30.069+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: youtube_analytics_pipeline.run_gold_transform manual__2026-05-02T15:14:22.889120+00:00 [queued]>
+[2026-05-02T15:18:30.069+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-02T15:18:30.073+0000] {taskinstance.py:2330} INFO - Executing <Task(GlueJobOperator): run_gold_transform> on 2026-05-02 15:14:22.889120+00:00
+[2026-05-02T15:18:30.076+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=329) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-02T15:18:30.075+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'youtube_analytics_pipeline', 'run_gold_transform', 'manual__2026-05-02T15:14:22.889120+00:00', '--job-id', '38', '--raw', '--subdir', 'DAGS_FOLDER/youtube_analytics_pipeline_dag.py', '--cfg-path', '/tmp/tmp87tdu2b6']
+[2026-05-02T15:18:30.076+0000] {standard_task_runner.py:91} INFO - Job 38: Subtask run_gold_transform
+[2026-05-02T15:18:30.076+0000] {standard_task_runner.py:64} INFO - Started process 330 to run task
+[2026-05-02T15:18:30.092+0000] {task_command.py:426} INFO - Running <TaskInstance: youtube_analytics_pipeline.run_gold_transform manual__2026-05-02T15:14:22.889120+00:00 [running]> on host f765ce7682ad
+[2026-05-02T15:18:30.118+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='boby' AIRFLOW_CTX_DAG_ID='youtube_analytics_pipeline' AIRFLOW_CTX_TASK_ID='run_gold_transform' AIRFLOW_CTX_EXECUTION_DATE='2026-05-02T15:14:22.889120+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-02T15:14:22.889120+00:00'
+[2026-05-02T15:18:30.119+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-02T15:18:30.122+0000] {glue.py:186} INFO - Initializing AWS Glue Job: youtube-gold-transform-dev. Wait for completion: True
+[2026-05-02T15:18:30.123+0000] {glue.py:365} INFO - Checking if job already exists: youtube-gold-transform-dev
+[2026-05-02T15:18:30.126+0000] {base_aws.py:587} WARNING - Unable to find AWS Connection ID 'aws_default', switching to empty.
+[2026-05-02T15:18:30.126+0000] {base_aws.py:164} INFO - No connection ID provided. Fallback on boto3 credential strategy (region_name='us-east-1'). See: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html
+[2026-05-02T15:18:30.188+0000] {credentials.py:1147} INFO - Found credentials in environment variables.
+[2026-05-02T15:18:31.865+0000] {glue.py:207} INFO - You can monitor this Glue Job run at: https://console.aws.amazon.com/gluestudio/home?region=us-east-1#/job/youtube-gold-transform-dev/run/jr_7274e0f22e56cff8713560ee6510802a4929fd3562f70cf4577b20cfcc412f44
+[2026-05-02T15:18:32.237+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:18:38.611+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:18:45.130+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:18:51.505+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:18:57.860+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:19:04.221+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:19:10.593+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:19:16.988+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:19:23.366+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:19:29.744+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:19:36.102+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:19:42.482+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:19:48.847+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:19:55.220+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:20:01.579+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:20:07.945+0000] {glue.py:348} INFO - Polling for AWS Glue Job youtube-gold-transform-dev current run state with status RUNNING
+[2026-05-02T15:20:14.275+0000] {glue.py:341} INFO - Exiting Job jr_7274e0f22e56cff8713560ee6510802a4929fd3562f70cf4577b20cfcc412f44 Run State: SUCCEEDED
+[2026-05-02T15:20:14.276+0000] {glue.py:222} INFO - AWS Glue Job: youtube-gold-transform-dev status: SUCCEEDED. Run Id: jr_7274e0f22e56cff8713560ee6510802a4929fd3562f70cf4577b20cfcc412f44
+[2026-05-02T15:20:14.276+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-02T15:20:14.290+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=youtube_analytics_pipeline, task_id=run_gold_transform, run_id=manual__2026-05-02T15:14:22.889120+00:00, execution_date=20260502T151422, start_date=20260502T151830, end_date=20260502T152014
+[2026-05-02T15:20:14.301+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-02T15:20:14.314+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-02T15:20:14.314+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
